@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love Dasha 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a0a1f 0%, #2d1b3d 50%, #1a0a1f 100%);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: floatUp 6s ease-in-out infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) scale(0);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(1);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .envelope {
+            position: relative;
+            width: 320px;
+            height: 240px;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+            margin-bottom: 40px;
+        }
+
+        .envelope:hover {
+            transform: scale(1.05) rotate(-2deg);
+        }
+
+        .envelope-front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(196, 69, 105, 0.4);
+            transition: all 0.5s ease;
+        }
+
+        .envelope-front::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 100px solid #ff8fb3;
+            transition: all 0.5s ease;
+        }
+
+        .envelope:hover .envelope-front::before {
+            border-top-color: #ffa5c3;
+        }
+
+        .envelope-text {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 60px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .letter {
+            position: absolute;
+            width: 280px;
+            height: 200px;
+            background: white;
+            border-radius: 5px;
+            top: 20px;
+            left: 20px;
+            transform: translateY(0);
+            opacity: 1;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            padding: 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .envelope.open .letter {
+            transform: translateY(-180px) scale(1.1);
+            opacity: 0;
+        }
+
+        .message {
+            display: none;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .message.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .message h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 42px;
+            color: #c44569;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .message .to {
+            font-size: 24px;
+            color: #ff6b9d;
+            margin-bottom: 20px;
+        }
+
+        .message p {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.8;
+            max-width: 500px;
+        }
+
+        .photo-frame {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #ff6b9d;
+            margin: 20px auto;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(196, 69, 105, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .placeholder-photo {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+        }
+
+        .poem {
+            background: linear-gradient(135deg, rgba(255,107,157,0.1), rgba(196,69,105,0.1));
+            border: 2px solid #ff6b9d;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            max-width: 500px;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s ease 0.5s;
+        }
+
+        .poem.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .poem h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            color: #c44569;
+            margin-bottom: 15px;
+        }
+
+        .poem p {
+            color: #444;
+            font-style: italic;
+            line-height: 2;
+            font-size: 15px;
+        }
+
+        .signature {
+            margin-top: 20px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            color: #c44569;
+        }
+
+        .click-hint {
+            color: white;
+            font-size: 14px;
+            margin-top: 20px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .sparkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 1s ease-out forwards;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .from-rajnish {
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            color: #ff6b9d;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-bg" id="hearts"></div>
+    <div class="sparkles" id="sparkles"></div>
+
+    <div class="container">
+        <div class="envelope" id="envelope" onclick="openEnvelope()">
+            <div class="letter">
+                <div class="photo-frame">
+                    <div class="placeholder-photo">💕</div>
+                </div>
+            </div>
+            <div class="envelope-front">
+                <div class="envelope-text">💌 Click to Open 💌</div>
+            </div>
+        </div>
+
+        <div class="message" id="message">
+            <h1>Happy Valentine's Day! 💕</h1>
+            <div class="to">To My Beautiful Dasha,</div>
+            <p>On this special day, I want you to know how much you mean to me. You are my sunshine, my everything, and the best thing that ever happened to me. Every moment with you is a treasure.</p>
+            <div class="from-rajnish">With all my love, Rajnish ❤️</div>
+            
+            <div class="poem" id="poem">
+                <h3>💝 A Gift Just for You 💝</h3>
+                <p>
+                    In your eyes, I see my tomorrow,<br>
+                    In your smile, I find my joy,<br>
+                    In your arms, I've found my home,<br>
+                    My sweet Dasha, my beautiful girl.<br><br>
+                    You're the melody in my heart,<br>
+                    The rhythm that keeps me alive,<br>
+                    With you, every day feels like Valentine's,<br>
+                    My love for you will forever thrive.<br><br>
+                    Happy Valentine's Day, my love! 💕
+                </p>
+                <div class="signature">— Rajnish 💕</div>
+            </div>
+        </div>
+
+        <div class="click-hint" id="hint">👆 Click the envelope to open your gift!</div>
+    </div>
+
+    <script>
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const hearts = ['💕', '💗', '💖', '💘', '❤️', '💓', '💞'];
+            
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 6 + 's';
+                heart.style.animationDuration = (5 + Math.random() * 3) + 's';
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        function createSparkle(x, y) {
+            const sparklesContainer = document.getElementById('sparkles');
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.background = `hsl(${Math.random() * 60 + 330}, 100%, 70%)`;
+            sparklesContainer.appendChild(sparkle);
+            
+            setTimeout(() => sparkle.remove(), 1000);
+        }
+
+        function openEnvelope() {
+            const envelope = document.getElementById('envelope');
+            const message = document.getElementById('message');
+            const hint = document.getElementById('hint');
+            const poem = document.getElementById('poem');
+            
+            if (envelope.classList.contains('open')) return;
+            
+            envelope.classList.add('open');
+            hint.style.display = 'none';
+            
+            setTimeout(() => {
+                envelope.style.opacity = '0';
+                setTimeout(() => {
+                    envelope.style.display = 'none';
+                    message.classList.add('show');
+                    
+                    setTimeout(() => {
+                        poem.classList.add('show');
+                        
+                        for (let i = 0; i < 50; i++) {
+                            setTimeout(() => {
+                                createSparkle(
+                                    Math.random() * window.innerWidth,
+                                    Math.random() * window.innerHeight
+                                );
+                            }, i * 50);
+                        }
+                    }, 500);
+                }, 300);
+            }, 600);
+        }
+
+        createHearts();
+    </script>
+</body>
+</html>
