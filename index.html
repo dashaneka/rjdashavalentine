@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Love Dasha 💕</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>For Dasha 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,15 +12,27 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --pink-1: #ffe4ec;
+            --pink-2: #ffc4d6;
+            --pink-3: #ffa4c0;
+            --pink-4: #ff7aa9;
+            --pink-5: #ff5c93;
+            --cream: #fff5f8;
+            --white: #ffffff;
+            --text-dark: #5a3d4d;
+            --text-light: #7a5a6a;
+        }
+
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #1a0a1f 0%, #2d1b3d 50%, #1a0a1f 100%);
-            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, var(--pink-1) 0%, var(--cream) 50%, var(--pink-1) 100%);
+            font-family: 'Quicksand', sans-serif;
             overflow-x: hidden;
             position: relative;
         }
 
-        .hearts-bg {
+        .bubble-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -28,35 +40,48 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
+            overflow: hidden;
         }
 
-        .heart {
+        .bubble {
             position: absolute;
-            font-size: 20px;
-            opacity: 0;
-            animation: floatUp 6s ease-in-out infinite;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: floatBubble 15s ease-in-out infinite;
         }
 
-        @keyframes floatUp {
-            0% {
-                opacity: 0;
-                transform: translateY(100vh) scale(0);
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-100px) scale(1);
-            }
+        @keyframes floatBubble {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+        }
+
+        .cute-icons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .cute-icon {
+            position: absolute;
+            font-size: 28px;
+            opacity: 0;
+            animation: iconFloat 10s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0% { opacity: 0; transform: translateY(100px) rotate(0deg) scale(0.5); }
+            15% { opacity: 0.8; }
+            85% { opacity: 0.7; }
+            100% { opacity: 0; transform: translateY(-100px) rotate(20deg) scale(1); }
         }
 
         .container {
             position: relative;
-            z-index: 1;
+            z-index: 10;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -65,193 +90,16 @@
             padding: 20px;
         }
 
-        .envelope {
-            position: relative;
-            width: 320px;
-            height: 240px;
-            cursor: pointer;
-            transition: transform 0.5s ease;
-            margin-bottom: 40px;
-        }
-
-        .envelope:hover {
-            transform: scale(1.05) rotate(-2deg);
-        }
-
-        .envelope-front {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 40px rgba(196, 69, 105, 0.4);
-            transition: all 0.5s ease;
-        }
-
-        .envelope-front::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 160px solid transparent;
-            border-right: 160px solid transparent;
-            border-top: 100px solid #ff8fb3;
-            transition: all 0.5s ease;
-        }
-
-        .envelope:hover .envelope-front::before {
-            border-top-color: #ffa5c3;
-        }
-
-        .envelope-text {
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
+        .header {
             text-align: center;
-            margin-top: 60px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
         }
 
-        .letter {
-            position: absolute;
-            width: 280px;
-            height: 200px;
-            background: white;
-            border-radius: 5px;
-            top: 20px;
-            left: 20px;
-            transform: translateY(0);
-            opacity: 1;
-            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            padding: 30px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .envelope.open .letter {
-            transform: translateY(-180px) scale(1.1);
-            opacity: 0;
-        }
-
-        .message {
-            display: none;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .message.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .message h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 42px;
-            color: #c44569;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .message .to {
-            font-size: 24px;
-            color: #ff6b9d;
-            margin-bottom: 20px;
-        }
-
-        .message p {
-            color: #555;
-            font-size: 16px;
-            line-height: 1.8;
-            max-width: 500px;
-        }
-
-        .photo-frame {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 5px solid #ff6b9d;
-            margin: 20px auto;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(196, 69, 105, 0.3);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .photo-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .placeholder-photo {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #ff6b9d, #c44569);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 60px;
-        }
-
-        .poem {
-            background: linear-gradient(135deg, rgba(255,107,157,0.1), rgba(196,69,105,0.1));
-            border: 2px solid #ff6b9d;
-            border-radius: 20px;
-            padding: 30px;
-            margin-top: 30px;
-            max-width: 500px;
-            text-align: center;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.8s ease 0.5s;
-        }
-
-        .poem.show {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .poem h3 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 28px;
-            color: #c44569;
-            margin-bottom: 15px;
-        }
-
-        .poem p {
-            color: #444;
-            font-style: italic;
-            line-height: 2;
-            font-size: 15px;
-        }
-
-        .signature {
-            margin-top: 20px;
-            font-family: 'Dancing Script', cursive;
-            font-size: 24px;
-            color: #c44569;
-        }
-
-        .click-hint {
-            color: white;
-            font-size: 14px;
-            margin-top: 20px;
+        .header h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: clamp(36px, 8vw, 64px);
+            color: var(--pink-5);
+            text-shadow: 3px 3px 0 var(--pink-3);
             animation: bounce 2s ease-in-out infinite;
         }
 
@@ -260,148 +108,390 @@
             50% { transform: translateY(-10px); }
         }
 
-        .sparkles {
+        .header p {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(20px, 4vw, 32px);
+            color: var(--text-light);
+            margin-top: 10px;
+        }
+
+        .gift-box {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+            margin: 30px 0;
+            transition: transform 0.3s ease;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .gift-box-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gift-lid {
+            position: absolute;
+            top: 0;
+            left: -10px;
+            width: 220px;
+            height: 50px;
+            background: linear-gradient(180deg, var(--pink-4) 0%, var(--pink-5) 100%);
+            border-radius: 10px 10px 5px 5px;
+            box-shadow: 0 5px 15px rgba(255, 92, 147, 0.3);
+            transition: all 0.5s ease;
+            z-index: 5;
+        }
+
+        .gift-lid::before {
+            content: '💝';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+        }
+
+        .gift-box:hover .gift-lid {
+            transform: translateY(-20px) rotate(-10deg);
+        }
+
+        .gift-body {
+            position: absolute;
+            top: 45px;
+            left: 0;
+            width: 200px;
+            height: 155px;
+            background: linear-gradient(180deg, var(--pink-3) 0%, var(--pink-4) 100%);
+            border-radius: 5px 5px 15px 15px;
+            box-shadow: 0 10px 30px rgba(255, 92, 147, 0.4);
+        }
+
+        .gift-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 100%;
+            background: var(--pink-5);
+            border-radius: 5px;
+        }
+
+        .gift-body::after {
+            content: '💕';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            animation: heartbeat 1s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        .click-me {
+            background: var(--pink-5);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 20px;
+            box-shadow: 0 5px 20px rgba(255, 92, 147, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 5px 20px rgba(255, 92, 147, 0.4); }
+            50% { box-shadow: 0 5px 30px rgba(255, 92, 147, 0.7); }
+        }
+
+        .letter {
+            display: none;
+            width: 90%;
+            max-width: 500px;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 
+                0 20px 60px rgba(255, 92, 147, 0.2),
+                0 0 0 10px var(--pink-2);
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8) translateY(50px);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .letter.show {
+            display: block;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .letter-emoji {
+            font-size: 70px;
+            margin-bottom: 15px;
+            animation: wiggle 1s ease-in-out infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .letter h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(32px, 7vw, 52px);
+            color: var(--pink-5);
+            margin-bottom: 5px;
+        }
+
+        .letter .from-name {
+            font-family: 'Pacifico', cursive;
+            font-size: clamp(24px, 5vw, 36px);
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .letter p {
+            color: var(--text-light);
+            font-size: clamp(15px, 3vw, 18px);
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .hearts-line {
+            font-size: 24px;
+            margin: 15px 0;
+            letter-spacing: 10px;
+        }
+
+        .poem {
+            background: linear-gradient(135deg, var(--pink-1) 0%, var(--cream) 100%);
+            border: 3px dashed var(--pink-3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .poem p {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(18px, 4vw, 24px);
+            color: var(--text-dark);
+            line-height: 2;
+            margin-bottom: 10px;
+        }
+
+        .poem .author {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 16px;
+            color: var(--pink-5);
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        .sticker-area {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 35px;
+            margin-top: 20px;
+            animation: dance 1s ease-in-out infinite;
+        }
+
+        @keyframes dance {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .confetti {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 2;
+            z-index: 100;
         }
 
-        .sparkle {
+        .confetti-piece {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background: white;
-            border-radius: 50%;
-            animation: sparkle 1s ease-out forwards;
+            width: 15px;
+            height: 15px;
+            top: -20px;
+            opacity: 0;
+            animation: fall 4s ease-in-out forwards;
         }
 
-        @keyframes sparkle {
-            0% {
-                transform: scale(0);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(2);
-                opacity: 0;
-            }
+        @keyframes fall {
+            0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
         }
 
-        .from-rajnish {
-            font-family: 'Dancing Script', cursive;
-            font-size: 28px;
-            color: #ff6b9d;
-            margin-top: 10px;
+        @media (max-width: 480px) {
+            .gift-box {
+                width: 160px;
+                height: 160px;
+            }
+            .gift-lid {
+                width: 180px;
+                height: 40px;
+            }
+            .gift-body {
+                width: 160px;
+                height: 120px;
+                top: 35px;
+            }
+            .gift-body::after {
+                font-size: 40px;
+            }
+            .letter {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="hearts-bg" id="hearts"></div>
-    <div class="sparkles" id="sparkles"></div>
+    <div class="bubble-bg" id="bubbles"></div>
+    <div class="cute-icons" id="icons"></div>
+    <div class="confetti" id="confetti"></div>
 
     <div class="container">
-        <div class="envelope" id="envelope" onclick="openEnvelope()">
-            <div class="letter">
-                <div class="photo-frame">
-                    <div class="placeholder-photo">💕</div>
-                </div>
-            </div>
-            <div class="envelope-front">
-                <div class="envelope-text">💌 Click to Open 💌</div>
+        <div class="header">
+            <h1>💕 Happy Valentine's Day 💕</h1>
+            <p>For the most amazing wife ever!</p>
+        </div>
+
+        <div class="gift-box" id="giftBox" onclick="openGift()">
+            <div class="gift-box-inner">
+                <div class="gift-lid"></div>
+                <div class="gift-body"></div>
             </div>
         </div>
 
-        <div class="message" id="message">
-            <h1>Happy Valentine's Day! 💕</h1>
-            <div class="to">To My Beautiful Dasha,</div>
-            <p>On this special day, I want you to know how much you mean to me. You are my sunshine, my everything, and the best thing that ever happened to me. Every moment with you is a treasure.</p>
-            <div class="from-rajnish">With all my love, Rajnish ❤️</div>
+        <div class="click-me" id="clickHint">👆 Click the gift!</div>
+
+        <div class="letter" id="letter">
+            <div class="letter-emoji">💌</div>
+            <h2>My Dearest Dasha,</h2>
+            <div class="from-name">— Love, Rajnish</div>
             
-            <div class="poem" id="poem">
-                <h3>💝 A Gift Just for You 💝</h3>
+            <p>
+                On this special Valentine's Day, I want to tell you just how much you mean to me. You are my sunshine on cloudy days, my smile when I'm sad, and my everything. Every moment with you is a gift I treasure deeply. I love you more than all the stars in the sky! 🌟
+            </p>
+            
+            <div class="hearts-line">💕 💗 💖 💗 💕</div>
+            
+            <div class="poem">
                 <p>
-                    In your eyes, I see my tomorrow,<br>
-                    In your smile, I find my joy,<br>
-                    In your arms, I've found my home,<br>
-                    My sweet Dasha, my beautiful girl.<br><br>
-                    You're the melody in my heart,<br>
-                    The rhythm that keeps me alive,<br>
-                    With you, every day feels like Valentine's,<br>
-                    My love for you will forever thrive.<br><br>
-                    Happy Valentine's Day, my love! 💕
+                    My heart beats just for you, my dear,<br>
+                    A love so true, so pure, so clear,<br>
+                    Your smile lights up my entire world,<br>
+                    My precious Dasha, my girl.<br><br>
+                    
+                    With you, I've found my perfect rhyme,<br>
+                    A love that grows with every time,<br>
+                    Happy Valentine's Day, my queen,<br>
+                    The best wife this man has seen! 💕
                 </p>
-                <div class="signature">— Rajnish 💕</div>
+                <div class="author">— Rajnish ❤️</div>
+            </div>
+            
+            <div class="sticker-area">
+                🌹 🥰 💐 💕 🎁
             </div>
         </div>
-
-        <div class="click-hint" id="hint">👆 Click the envelope to open your gift!</div>
     </div>
 
     <script>
-        function createHearts() {
-            const heartsContainer = document.getElementById('hearts');
-            const hearts = ['💕', '💗', '💖', '💘', '❤️', '💓', '💞'];
+        function createBubbles() {
+            const container = document.getElementById('bubbles');
+            const colors = ['#ffc4d6', '#ffa4c0', '#ffe4ec', '#fff0f5'];
             
-            for (let i = 0; i < 30; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-                heart.style.left = Math.random() * 100 + '%';
-                heart.style.animationDelay = Math.random() * 6 + 's';
-                heart.style.animationDuration = (5 + Math.random() * 3) + 's';
-                heartsContainer.appendChild(heart);
+            for (let i = 0; i < 15; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                bubble.style.left = Math.random() * 100 + '%';
+                bubble.style.top = Math.random() * 100 + '%';
+                bubble.style.width = (30 + Math.random() * 50) + 'px';
+                bubble.style.height = bubble.style.width;
+                bubble.style.background = colors[Math.floor(Math.random() * colors.length)];
+                bubble.style.animationDelay = Math.random() * 5 + 's';
+                bubble.style.animationDuration = (10 + Math.random() * 10) + 's';
+                container.appendChild(bubble);
             }
         }
 
-        function createSparkle(x, y) {
-            const sparklesContainer = document.getElementById('sparkles');
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            sparkle.style.left = x + 'px';
-            sparkle.style.top = y + 'px';
-            sparkle.style.background = `hsl(${Math.random() * 60 + 330}, 100%, 70%)`;
-            sparklesContainer.appendChild(sparkle);
+        function createIcons() {
+            const container = document.getElementById('icons');
+            const icons = ['💕', '💗', '💖', '💘', '🌸', '🌺', '🦋', '🌙', '⭐', '💫', '🎀', '🐰'];
             
-            setTimeout(() => sparkle.remove(), 1000);
+            for (let i = 0; i < 20; i++) {
+                const icon = document.createElement('div');
+                icon.className = 'cute-icon';
+                icon.textContent = icons[Math.floor(Math.random() * icons.length)];
+                icon.style.left = Math.random() * 100 + '%';
+                icon.style.animationDelay = Math.random() * 10 + 's';
+                icon.style.animationDuration = (8 + Math.random() * 5) + 's';
+                icon.style.fontSize = (20 + Math.random() * 15) + 'px';
+                container.appendChild(icon);
+            }
         }
 
-        function openEnvelope() {
-            const envelope = document.getElementById('envelope');
-            const message = document.getElementById('message');
-            const hint = document.getElementById('hint');
-            const poem = document.getElementById('poem');
+        function createConfetti() {
+            const container = document.getElementById('confetti');
+            const shapes = ['❤️', '💕', '💗', '💖', '🌸', '⭐', '💫', '🎀'];
+            const colors = ['#ff7aa9', '#ffc4d6', '#ff5c93', '#ffa4c0', '#ff9ecf'];
             
-            if (envelope.classList.contains('open')) return;
+            for (let i = 0; i < 60; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.color = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.fontSize = (15 + Math.random() * 20) + 'px';
+                piece.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(piece);
+            }
+        }
+
+        function openGift() {
+            const giftBox = document.getElementById('giftBox');
+            const clickHint = document.getElementById('clickHint');
+            const letter = document.getElementById('letter');
+            const header = document.querySelector('.header');
             
-            envelope.classList.add('open');
-            hint.style.display = 'none';
+            if (giftBox.classList.contains('opened')) return;
+            giftBox.classList.add('opened');
+            
+            clickHint.style.display = 'none';
+            
+            giftBox.style.transform = 'scale(1.2)';
             
             setTimeout(() => {
-                envelope.style.opacity = '0';
+                giftBox.style.opacity = '0';
+                giftBox.style.transform = 'translateY(-100px) scale(0.5)';
+                
                 setTimeout(() => {
-                    envelope.style.display = 'none';
-                    message.classList.add('show');
-                    
-                    setTimeout(() => {
-                        poem.classList.add('show');
-                        
-                        for (let i = 0; i < 50; i++) {
-                            setTimeout(() => {
-                                createSparkle(
-                                    Math.random() * window.innerWidth,
-                                    Math.random() * window.innerHeight
-                                );
-                            }, i * 50);
-                        }
-                    }, 500);
-                }, 300);
-            }, 600);
+                    giftBox.style.display = 'none';
+                    header.style.display = 'none';
+                    letter.classList.add('show');
+                    createConfetti();
+                }, 400);
+            }, 500);
         }
 
-        createHearts();
+        createBubbles();
+        createIcons();
     </script>
 </body>
 </html>
